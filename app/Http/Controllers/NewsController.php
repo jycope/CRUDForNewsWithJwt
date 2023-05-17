@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NewsCollection;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -12,15 +14,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $news = News::all();
+        $transformedNews = $news->map(fn ($itemNews) => new NewsCollection($itemNews));
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return $transformedNews;
     }
 
     /**
@@ -35,8 +32,8 @@ class NewsController extends Controller
      * Display the specified resource.
      */
     public function show(News $news)
-    {
-        //
+    {        
+        return new NewsCollection($news);
     }
 
     /**
