@@ -16,8 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->group(function () {
-    Route::post('register', [AuthController::class, 'register'])->withoutMiddleware('auth:api');
-    Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
+    Route::post('register', [AuthController::class, 'register'])
+        ->withoutMiddleware('auth:api');
+
+    Route::post('login', [AuthController::class, 'login'])
+        ->withoutMiddleware('auth:api');
+
+    Route::get('notAuthorized', [AuthController::class, 'notAuthorized'])
+        ->withoutMiddleware('auth:api')
+        ->name('notAuthorized');
+        
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
