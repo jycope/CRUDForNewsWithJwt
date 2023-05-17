@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Авторизация
-Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->withoutMiddleware('auth:api');
+    Route::post('login', [AuthController::class, 'login'])->withoutMiddleware('auth:api');
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
 
-// Регистрация
-Route::post('register', [AuthController::class, 'register']);
-
+    Route::resource('news', NewsController::class)->middleware('auth:api');
+});
