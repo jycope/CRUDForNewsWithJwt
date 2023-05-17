@@ -23,3 +23,5 @@ DELETE
 /api/news/{news} - удаление новости
 
 Так же есть документация api: openapi.json и openapi.yaml, файлы можно загрузить в editor для удобного просмотра https://editor.swagger.io/
+
+Либо воспользоваться хостингом: http://dmitr1ig.beget.tech/public_html/api/
