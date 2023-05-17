@@ -15,7 +15,6 @@ class NewsCollection extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
         return [
             'title' => $this->title,
             'content' => $this->content,
