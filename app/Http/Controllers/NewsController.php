@@ -38,7 +38,7 @@ class NewsController extends Controller
         $news->fill($validator->validated());
         $news->save();
     
-        return response()->json(['message' => 'Новость создана']);
+        return response('Новость создана');
     }
 
     /**
@@ -62,14 +62,28 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $news->fill($validator->validated());
+        $news->save();
+
+        return response('Новость изменена');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(News $news)
-    {
-        //
+    {        
+        $news->delete();
+
+        return response('Новость удалена');
     }
 }
