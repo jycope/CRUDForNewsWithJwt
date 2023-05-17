@@ -1,0 +1,186 @@
+openapi: 3.0.0
+info:
+  title: Моё API
+  description: Описание API для регистрации пользователей
+  version: 1.0.0
+
+paths:
+  /api/register:
+    post:
+      summary: Регистрация нового пользователя
+      description: Создает нового пользователя с заданными данными. 
+      parameters:
+        - name: name
+          in: query
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: Email пользователя
+          required: true
+          schema:
+            type: string
+            format: email
+        - name: password
+          in: query
+          description: Пароль пользователя
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Пользователь успешно создан.
+        '422':
+          description: Не удалось создать пользователя из-за ошибок валидации.
+        '500':
+          description: Внутренняя ошибка сервера.
+  /api/news:
+    post:
+      summary: Создание новости
+      operationId: createNews
+      description: Создает новую новость с заданными данными. *Необходимо передать токен который выдает при авторизации
+      parameters:
+        - name: title
+          in: query
+          description: Заголовок новости
+          required: true
+          schema:
+            type: string
+        - name: content
+          in: query
+          description: Содержимое новости
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Новость успешно создана.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Новость создана.
+        '422':
+          description: Не удалось создать новость из-за ошибок валидации.
+        '500':
+          description: Внутренняя ошибка сервера.
+    get:
+      summary: Получение всех новостей
+      operationId: getAllNews
+      description: Возвращает список всех новостей в формате JSON. *Необходимо передать токен который выдает при авторизации
+      responses:
+        '200':
+          description: Успешное получение списка новостей.
+          content:
+            application/json:
+              example:
+                - title: "title"
+                  content: "content"
+                  creation_date: "2023-05-17 19:45:03"
+        '500':
+          description: Внутренняя ошибка сервера
+  /api/news/{news}:
+    get:
+      summary: Получение конкретной новости
+      description: Возвращает информацию о конкретной новости в формате JSON.*Необходимо передать токен который выдает при авторизации
+      parameters:
+        - name: news
+          in: path
+          description: Идентификатор новости
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное получение информации о новости.
+          content:
+            application/json:
+              example:
+                - title: "title"
+                  content: "content"
+                  creation_date: "2023-05-17 19:45:03"
+        '404':
+          description: Новость не найдена
+        '500':
+          description: Внутренняя ошибка сервера
+    put:
+      summary: Изменение новости
+      description: Изменение новости. *Необходимо передать токен который выдает при авторизации
+      parameters:
+        - name: news
+          in: path
+          description: Идентификатор новости
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        200:
+          description: Новость изменена
+        422:
+          description: Ошибка валидации
+    delete:
+      summary: Удаление новости
+      description: Удаляет переданную новость.*Необходимо передать токен который выдает при авторизации
+      parameters:
+        - name: news
+          in: path
+          description: Идентификатор новости
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Новость удалена
+  /api/login:
+    post:
+      summary: Авторизация пользователя
+      description: Выдает токен зарегистрированному пользователю.
+      parameters:
+        - name: name
+          in: query
+          description: Имя пользователя
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: Email пользователя
+          required: true
+          schema:
+            type: string
+            format: email
+        - name: password
+          in: query
+          description: Пароль пользователя
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Токен авторизации
+        401:
+          description: Неверные учетные данные

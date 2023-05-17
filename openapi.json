@@ -1,0 +1,197 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "REST API для создания и получения информации о пользователе",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000/api/user",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/user": {
+      "get": {
+        "summary": "Метод получения всех пользователей",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ от сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Метод создания пользователя",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешный ответ от сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{user}": {
+      "get": {
+        "summary": "Метод получения пользователя",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор пользователя",
+            "schema": {
+              "type": "string",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный ответ от сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Метод удаления пользователя",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "description": "Идентификатор пользователя",
+            "schema": {
+              "type": "string",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешный удаление пользователя",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Users": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Users"
+        },
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "login": {
+            "type": "string",
+            "example": "Dmitry"
+          },
+          "family": {
+            "type": "string",
+            "example": "Nikolaev"
+          },
+          "name": {
+            "type": "string",
+            "example": "Andrew"
+          },
+          "date_registration": {
+            "type": "string",
+            "example": "12.12.2002"
+          },
+          "created_at": {
+            "format": "2023-01-27T18:06:23.000Z",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "2023-01-27T18:06:23.000Z",
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        },
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "login": {
+            "type": "string",
+            "example": "Dmitry"
+          },
+          "family": {
+            "type": "string",
+            "example": "Nikolaev"
+          },
+          "name": {
+            "type": "string",
+            "example": "Andrew"
+          },
+          "date_registration": {
+            "type": "string",
+            "example": "12.12.2002"
+          },
+          "created_at": {
+            "format": "2023-01-27T18:06:23.000Z",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "2023-01-27T18:06:23.000Z",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
