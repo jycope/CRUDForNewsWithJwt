@@ -3,7 +3,8 @@
 1.  Прописать в .env: базу данных **DB_DATABASE**, username от базы данных **DB_USERNAME** и пароль **DB_PASSWORD**
 2.  Установить зависимости **composer install**
 3. **php artisan migrate**
-4. php artisan serve
+4. запустить php artisan serve
+5. сгенерировать jwt-токен php artisan jwt:secret
 
 Инструкция по проекту:
 Тесты находятся tests/Unit/News.Test. Здесь находятся тесты на регистрацию и авторизацию, так же тестирование удаление, создания, чтения и обновления
