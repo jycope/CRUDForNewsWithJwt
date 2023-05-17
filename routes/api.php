@@ -22,5 +22,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 
-    Route::resource('news', NewsController::class)->middleware('auth:api');
+    Route::resource('news', NewsController::class)->except(['show', 'index']);
 });
+
+Route::get('news/{news}', [NewsController::class, 'show'])->name('news.destroy');
+Route::get('news', [NewsController::class, 'index'])->name('news.index');
